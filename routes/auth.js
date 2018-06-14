@@ -9,8 +9,7 @@ router.get("/register", function(req, res){
 });
 
 router.post("/register", function(req, res){
-    //hide the magic decrypt number on github
-    let hash = bcrypt.hashSync(req.body.user.password, process.env.HASHNUMBER);
+    let hash = bcrypt.hashSync(req.body.user.password, 14);
     req.body.user.password = hash;
     
     User.create(req.body.user, function(err, newUser){
