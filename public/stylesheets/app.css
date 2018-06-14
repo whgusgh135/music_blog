@@ -46,3 +46,7 @@
     border-color: black;
     outline: none;
 }
+
+.btn-block {
+    margin-bottom: 2em;
+}
