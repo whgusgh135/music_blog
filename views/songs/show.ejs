@@ -1,0 +1,88 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        
+        <div class="col-md-8">
+            <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="<%= song.link %>"></iframe>
+            </div>
+            <h3><strong><%= song.artist %></strong> - <%= song.song %></h3>
+            
+            <% if((user && user.id == song.author) || (user && user.id == "adminaccount")){ %>
+                <form action="/songs/<%= song._id %>?_method=DELETE" method="POST">
+                    <button style="margin-left:2px" class="btn btn-light float-right"><i class="fas fa-trash-alt"></i></button>
+                </form>
+                <a class="btn btn-light float-right" href="/songs/<%= song._id %>/edit"><i class="fas fa-eraser"></i></a>
+            <% } %>
+            
+            <p style="padding-right: 80px"><%= song.description %></p>
+            
+            <form action="/songs/<%= song._id %>/comments" method="POST">
+                <div class="row">
+                    <div class="col-2 col-xl-1 col-lg-1 col-xs-4">
+                        <img style="width:50px" class="rounded-circle" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+                    </div>
+                    <div class="col-10 col-xl-11 col-lg-11 col-xs-8">
+                        <input class="field__input" type="text" style="width: 100%" name="comment[text]" placeholder="leave a comment">
+                        <input class="float-right btn btn-success btn-sm" type="submit" value="comment">
+                    </div>
+                </div>
+                
+                
+            </form>
+            <br><br><hr>
+            <% song.comments.forEach(function(comment){ %>
+                <div class="row">
+                    <div class="col-2 col-xl-1 col-lg-1 col-xs-4">
+                        <img  style="width:50px" class="rounded-circle" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+                    </div>
+
+                    <div class="col-10 col-xl-11 col-lg-11 col-xs-8">
+                        <p style="margin-bottom: 0;"><strong><%= comment.author.nickname %></strong></p>
+                        <p><%= comment.text %></p> 
+                    </div>
+                </div>
+            <% }) %>
+            
+            
+        </div>
+        
+        <div class="col-md-4">
+            <p class="lead">Other Songs</p>
+            <% for(var i = 0; i < 5; i++){ %>
+
+            <% if(!(JSON.stringify(allSongs[i]._id) == JSON.stringify(song._id))){ %>
+            <div>
+                <a class="songbox" href="/songs/<%= allSongs[i]._id %>">
+                    
+                <div class="row" style="margin-bottom: 10px">
+                    <div class="col-6">
+                        <div>
+                            <img src="<%= allSongs[i].image %>" class="card-img-top" style="height: 100px">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card-block">
+                            <p class="card-title"><%= allSongs[i].artist %></p>
+                            <p class="card-text"><%= allSongs[i].song %></p> 
+                        </div>
+                    </div>
+                </div>
+                
+                </a>
+            </div>
+            <% }} %>
+        </div>
+        
+    </div>
+    
+    
+</div>
+
+
+    
+
+
+
+<% include ../partials/footer %>

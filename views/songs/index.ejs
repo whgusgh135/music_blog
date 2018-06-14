@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Music Blog</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+        <link href="/stylesheets/app.css" rel="stylesheet">
+        <link href="/stylesheets/background.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
+            <a class="navbar-brand" href="/songs"><i class="fas fa-headphones"></i> Music Blog</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="/songs#section1" class="nav-link">Songs</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <% if(!user){ %>
+                        <li class="nav-item">
+                            <a href="/login" class="nav-link">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/register" class="nav-link">Sign Up</a>
+                        </li>
+                    <% } else { %>
+                        <li class="nav-item">
+                            <a href="/logout" class="nav-link">Logout</a>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+        </nav>
+        
+        
+    
+
+
+<header>
+    
+    
+    
+    <div id="landing-header">
+ 		<h1>Welcome to My Music Blog!</h1>
+		<a href="#section1" class="btn btn-lg btn-success">View my favourite songs</a>
+		<a href="#section2" class="btn btn-lg btn-success">View user recommendations</a>
+		
+		<% if(user){ %>
+            <a href="/songs/new" class="btn btn-lg btn-info">Recommend a Song!!!</a>
+        <% } %>
+    </div>
+    
+    
+    <ul class="slideshow">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+</header>
+
+<div id="section1"></div>
+<div class="container" >
+    
+    
+    
+    <div class="row">
+        <% songs.forEach(function(song){ %>
+        <% if (song.author == "adminaccount") { %>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a class="songbox" href="/songs/<%= song._id %>">
+                <div class="card song-card">
+                    <img src="<%= song.image %>" class="card-img-top" onerror=this.src="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=beb0f979ed2a7da134fb95a2ae6290c3&auto=format&fit=crop&w=750&q=80">
+                    <div class="card-body">
+                        <p class="card-text"><%= song.song %></p>
+                        <p class="card-text"><strong><%= song.artist %></strong></p>
+                    </div>
+                </div>
+                </a>
+            </div>
+        <% }}) %>
+    </div>
+</div>
+    
+<div id="section2"></div>
+<div class="container">
+    <div class="row"> 
+        <% songs.forEach(function(song){ %>
+        <% if (song.author !== "adminaccount") { %>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <a class="songbox" href="/songs/<%= song._id %>">
+                <div class="card song-card">
+                    <img src="<%= song.image %>" class="card-img-top" onerror=this.src="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=beb0f979ed2a7da134fb95a2ae6290c3&auto=format&fit=crop&w=750&q=80">
+                    <div class="card-body">
+                        <p class="card-text"><%= song.song %></p>
+                        <p class="card-text"><strong><%= song.artist %></strong></p>
+                    </div>
+                </div>
+                </a>
+            </div>
+        <% }}) %>
+    </div>
+    
+    
+</div>
+
+<% include ../partials/footer %>
