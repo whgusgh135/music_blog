@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Music Blog</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+        <link href="/stylesheets/app.css" rel="stylesheet">
+        <link href="/stylesheets/main.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    </head>
+
+
+    <body>
+
+        <nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
+            <a class="navbar-brand" href="#"><i class="fas fa-headphones"></i> Music Blog</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="/#about-section" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#songs-section" class="nav-link">Songs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/login" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/register" class="nav-link">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout" class="nav-link">Logout</a>
+                    </li>    
+                </ul>
+            </div>
+        </nav>
+
+        <section class="main">
+            <div class="background-image" style="background-image: url(https://images.unsplash.com/photo-1459233313842-cd392ee2c388?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4fabfc1437f1bf55ce051a8ce3efd6d4&auto=format&fit=crop&w=1050&q=80);"></div>
+            <div class="main-content-area">
+                <h1>K-INDIE</h1>
+                <h3>Hidden Gems of Korean Music</h3>
+                <a href="/#songs-section" class="btn">Browse Now</a>
+            </div>
+        </section>
+
+        <section class="about" id="about-section">
+            <h3 class="title">About The Blog</h3>
+            <p>To be upfront, this is NOT a K-pop blog. Sure, there are some great K-pop songs but there are more to Korean music. If you are interested in finding out about talented Korean artists of other genres, you have come to the right place. Please enjoy and share your favourite songs too!</p>
+            <hr>
+        </section>
+
+
+    <!--Make arrays of songs from database-->
+        <% var adminSongs = []; %>
+        <% songs.forEach(function(song){ %>
+            <% if (song.author == "adminaccount") { %>
+                <% adminSongs.push(song); %>
+            <% } %>
+        <% }) %>
+        
+        <% var userSongs = []; %>
+        <% songs.forEach(function(song){ %>
+            <% if (song.author !== "adminaccount") { %>
+                <% userSongs.push(song); %>
+            <% } %>
+        <% }) %>
+        
+    <!--Make random number to post songs in random order-->
+        <% var fixedSongNum = adminSongs.length; %>
+        <% var randomNum = 0; %>
+        <% var randomizedSongs = []; %>
+        <% var randomizedUserSongs = []; %>
+        
+    <!--Make randomized arrays of songs-->
+        <% for (var i = 0; i < 12; i++) { %>
+            <% randomNum = Math.floor(Math.random() * adminSongs.length); %>
+            <% randomizedSongs.push(adminSongs[randomNum]) %>
+            <% adminSongs.splice(randomNum, 1); %>
+        <% } %>  
+            
+        <% for (var i = 0; i < 6; i++) { %>
+            <% randomNum = Math.floor(Math.random() * userSongs.length); %>
+            <% randomizedUserSongs.push(userSongs[randomNum]) %>
+            <% userSongs.splice(randomNum, 1); %>
+        <% } %>     
+
+        <section class="songs" id="songs-section">
+            <h3 class="title">Our List</h3>
+            <div class="container-fluid">
+                <div class="grid">
+                    <div class="first-column">
+                        <a href="/songs/<%= randomizedSongs[0]._id %>" class="small" style="background-image: url(<%= randomizedSongs[0].image %>)">
+                            <i class="fas fa-headphones"></i>
+                        </a>
+                        <a href="/songs/<%= randomizedSongs[1]._id %>" class="small" style="background-image: url(<%= randomizedSongs[1].image %>)">
+                            <i class="fas fa-headphones"></i>
+                        </a>
+                        <a href="/songs/<%= randomizedSongs[2]._id %>" class="large" style="background-image: url(<%= randomizedSongs[2].image %>)">
+                            <i class="fas fa-headphones"></i>
+                        </a>
+                    </div>
+                    <div class="second-column">
+                        <% for (var k = 3; k < 9; k++) { %>
+                            <a href="/songs/<%= randomizedSongs[k]._id %>" class="small" style="background-image: url(<%= randomizedSongs[k].image %>)">
+                                <i class="fas fa-headphones"></i>
+                            </a>
+                        <% } %>
+                    </div>
+                    <div class="third-column">
+                        <a href="/songs/<%= randomizedSongs[9]._id %>" class="large" style="background-image: url(<%= randomizedSongs[9].image %>)">
+                            <i class="fas fa-headphones"></i>
+                        </a>
+                        <a href="/songs/<%= randomizedSongs[10]._id %>" class="small" style="background-image: url(<%= randomizedSongs[10].image %>)">
+                            <i class="fas fa-headphones"></i>
+                        </a>
+                        <a href="/songs/<%= randomizedSongs[11]._id %>" class="small" style="background-image: url(<%= randomizedSongs[11].image %>)">
+                            <i class="fas fa-headphones"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <a href="#" class="btn">More Songs</a>
+        </section>
+
+        <section class="songs">
+            <h3 class="title">User Recommendations</h3>
+            <div class="container-fluid">
+                <div class="grid">
+                    <div class="user-list">
+                        <% for (var u = 0; u < 6; u++) { %>
+                            <a href="/songs/<%= randomizedUserSongs[u]._id %>" class="small" style="background-image: url(<%= randomizedUserSongs[u].image %>)">
+                                <i class="fas fa-headphones"></i>
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <a href="#" class="btn">More Songs</a>
+        </section>
+
+        <section class="signup">
+            <h3 class="title">Become a Member</h3>
+            <p>Want to share your songs? Want to write comments? Join now!</p>
+            <hr>
+            <a href="#" class="btn">Sign Up</a>
+            
+        </section>
+
+        <footer>
+            <p>Kevin Cho 2018</p>
+            <p>Nothing much to write really.. just thought that footer is nice to have!</p>
+            <ul>
+                <li><a href="#"><i class="fas fa-envelope-square fa-2x"></i></i></a></li>
+                <li><a href="#"><i class="fab fa-facebook-square fa-2x"></i></a></li>
+                <li><a href="#"><i class="fab fa-github-square fa-2x"></i></i></a></li>
+            </ul>
+        </footer>
+</body>
+</html>

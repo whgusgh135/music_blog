@@ -16,9 +16,11 @@ var authRoutes = require("./routes/auth");
 
 // schema
 var User = require("./models/user");
+var Song = require("./models/song");
 
 
 mongoose.connect(process.env.DATABASEURL);
+//mongodb://localhost/music_blog
 
 
 app.set("view engine", "ejs");
@@ -63,10 +65,16 @@ app.use("/songs", songRoutes);
 app.use("", commentRoutes);
 app.use("", authRoutes);
 
-
+// Main page
 // Main page
 app.get("/", function(req, res){
-    res.redirect("/songs");
+    Song.find({}, function(err, foundSongs){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("./main", {songs: foundSongs});
+        }
+    });
 });
 
 
