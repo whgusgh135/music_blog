@@ -1,23 +1,26 @@
 <% include ../partials/header %>
-    
-<div class="container">
-    <h1 style="text-align: center">Login</h1>
-    <div style="width: 30%; margin: 0 auto;">
-        <form action="/login" method="POST">
-            <br>
-            <div class="form-group">
-                <input class="form-control" type="text" name="user[id]" placeholder="user id" required>
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="password" name="user[password]" placeholder="password" required>
-            </div>
-            <div style="width: 30%; margin: 0 auto;">
-                <button class="btn btn-lg btn-success">Submit</button>
-            </div>
+
+<section class="forms-page">
+    <h3 class="title">Login</h3>
+    <div class="form-div">
+        <form class="form-style login-form" action="/login" method="POST">
+            <ul>
+                <li>
+                    <label>User Name</label>
+                    <input type="text" name="user[id]" maxlength="30" required>
+                    <span>Username goes here</span>
+                </li>
+                <li>
+                    <label>Password</label>
+                    <input type="password" name="user[password]" maxlength="40" required>
+                    <span>Password goes here</span>
+                </li>
+                <li>
+                    <button class="btn">Login</button>
+                </li>
+            </ul>
         </form>
     </div>
-</div>
-
-
+</section>
 
 <% include ../partials/footer %>

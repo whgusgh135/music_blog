@@ -61,7 +61,7 @@ app.use(function(req, res, next){
 });
 
 // Use routes
-app.use("/songs", songRoutes);
+app.use("", songRoutes);
 app.use("", commentRoutes);
 app.use("", authRoutes);
 

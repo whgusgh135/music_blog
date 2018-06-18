@@ -1,32 +1,43 @@
 <% include ../partials/header %>
 
-<h1>New form</h1>
 
-<div class="container">
-    <h1 style="text-align: center">Create a New Song Post</h1>
-    <div style="width: 50%; margin: 0 auto;">
-        <form action="/songs" method="POST">
-            <div class="form-group">
-                <input class="form-control" type="text" name="song[song]" placeholder="song name" maxlength="40" required>
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="text" name="song[artist]" placeholder="artist name" maxlength="30" required>
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="text" name="song[image]" placeholder="song image">
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="text" name="song[link]" placeholder="youtube link">
-            </div>
-            <div class="form-group">
-                <textarea style="height: 200px" class="form-control" name="song[description]" placeholder="song description" maxlength="400"></textarea>
-            </div>
-            <div style="width: 30%; margin: 0 auto;">
-                <button class="btn btn-lg btn-success">Submit</button>
-            </div>
+<section class="forms-page">
+    <h3 class="title">Create a New Song Post</h3>
+    <div class="form-div">
+        <form class="form-style" action="/songs" method="POST">
+            <ul>
+                <li>
+                    <label>Artist Name</label>
+                    <input type="text" name="song[artist]" maxlength="30" required>
+                    <span>Artist name goes here</span>
+                </li>
+                <li>
+                    <label>Song Name</label>
+                    <input type="text" name="song[song]" maxlength="40" required>
+                    <span>Song name goes here</span>
+                </li>
+                <li>
+                    <label>Song Image</label>
+                    <input type="text" name="song[image]">
+                    <span>Your song or artist image</span>
+                </li>
+                <li>
+                    <label>Youtube Link</label>
+                    <input type="text" name="song[link]">
+                    <span>Your song youtube link</span>
+                </li>
+                <li>
+                    <label>Song Description</label>
+                    <textarea style="height: 200px" name="song[description]" maxlength="400"></textarea>
+                    <span>Song description goes here</span>
+                </li>
+                <li>
+                    <button class="btn">Submit</button>
+                </li>
+            </ul>
         </form>
     </div>
-</div>
+</section>
 
 
 

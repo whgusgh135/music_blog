@@ -26,7 +26,7 @@ router.use(function(req, res, next){
 
 // Song RESTful routes
 // INDEX route
-router.get("/", function(req, res){
+router.get("/songs", function(req, res){
     Song.find({}, function(err, foundSongs){
         if(err){
             console.log(err);
@@ -36,13 +36,23 @@ router.get("/", function(req, res){
     });
 });
 
+router.get("/userlist", function(req, res){
+    Song.find({}, function(err, foundSongs){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("./songs/userlist", {songs: foundSongs});
+        }
+    });
+});
+
 // NEW route
-router.get("/new", middleware.loginRequired, function(req, res){
+router.get("/songs/new", middleware.loginRequired, function(req, res){
     res.render("./songs/new");
 });
 
 // CREATE route
-router.post("/", function(req, res){
+router.post("/songs", function(req, res){
     req.body.song.description =  req.sanitize(req.body.song.description);
     if(!req.body.song.description){
         req.body.song.description = "No description";
@@ -60,7 +70,7 @@ router.post("/", function(req, res){
 });
 
 // SHOW route
-router.get("/:id", function(req, res){
+router.get("/songs/:id", function(req, res){
     Song.findById(req.params.id).populate("comments").exec(function(err, foundSong){
         if(err) {
             console.log(err);
@@ -78,7 +88,7 @@ router.get("/:id", function(req, res){
 });
 
 // EDIT route
-router.get("/:id/edit", middleware.checkSongOwnership, function(req, res){
+router.get("/songs/:id/edit", middleware.checkSongOwnership, function(req, res){
     Song.findById(req.params.id, function(err, foundSong){
         if(err) {
             console.log(err);
@@ -90,7 +100,7 @@ router.get("/:id/edit", middleware.checkSongOwnership, function(req, res){
 });
 
 // UPDATE route
-router.put("/:id", middleware.checkSongOwnership, function(req, res){
+router.put("/songs/:id", middleware.checkSongOwnership, function(req, res){
     Song.findByIdAndUpdate(req.params.id, req.body.song, function(err, updatedSong){
         if(err) {
             console.log(err);
@@ -102,7 +112,7 @@ router.put("/:id", middleware.checkSongOwnership, function(req, res){
 });
 
 // DESTROY route
-router.delete("/:id", middleware.checkSongOwnership, function(req, res){
+router.delete("/songs/:id", middleware.checkSongOwnership, function(req, res){
     Song.findByIdAndRemove(req.params.id, function(err){
         if(err) {
             console.log(err);

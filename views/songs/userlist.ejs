@@ -1,0 +1,48 @@
+<% include ../partials/header %>
+
+    <!--Make arrays of songs from database-->
+        
+        <% var userSongs = []; %>
+        <% songs.forEach(function(song){ %>
+            <% if (song.author !== "adminaccount") { %>
+                <% userSongs.push(song); %>
+            <% } %>
+        <% }) %>
+        
+    <!--Make random number to post songs in random order-->
+        <% var fixedSongNum = userSongs.length; %>
+        <% var randomNum = 0; %>
+        <% var randomizedSongs = []; %>
+        <% var randomizedUserSongs = []; %>
+        
+    <!--Make randomized arrays of songs-->
+        
+        <% for (var i = 0; i < fixedSongNum; i++) { %>
+            <% randomNum = Math.floor(Math.random() * userSongs.length); %>
+            <% randomizedUserSongs.push(userSongs[randomNum]) %>
+            <% userSongs.splice(randomNum, 1); %>
+        <% } %>     
+
+        <section class="songs" id="user-playlist">
+            <h3 id="playlist-title">User Recommended Playlist</h3>
+            <div class="container-fluid">
+                <div class="grid">
+                    <% for (var i = 0; i < Math.ceil(fixedSongNum / 6); i++) { %>
+                        <div class="user-list">
+                            <% for (var u = 0; u < 6; u++) { %>
+                                <% if(fixedSongNum - (i * 6) - u > 0) {  %>
+                                    <a href="/songs/<%= randomizedUserSongs[i * 6 + u]._id %>" class="small" style="background-image: url(<%= randomizedUserSongs[i * 6 + u].image %>)">
+                                        <i class="fas fa-headphones"></i>
+                                    </a>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+
+            <hr>
+            <a href="/songs/new" class="btn">Post a Song</a>
+        </section>
+
+<% include ../partials/footer %>
