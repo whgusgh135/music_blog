@@ -3,8 +3,11 @@ var router = express.Router();
 var User = require("../models/user");
 var bcrypt = require("bcryptjs");
 
+// For redirection
+var backURL;
 // AUTHENTICATION LOGIC
 router.get("/register", function(req, res){
+    backURL = req.header("Referer");
     res.render("./auth/register");
 });
 
@@ -22,12 +25,14 @@ router.post("/register", function(req, res){
             res.redirect("back");
         } else {
             req.session.userId = newUser._id;
-            res.redirect("/songs");
+            res.redirect(backURL);
         }
     });
 });
 
+
 router.get("/login", function(req, res){
+    backURL = req.header("Referer");
     res.render("./auth/login");
 });
 
@@ -38,14 +43,15 @@ router.post("/login", function(req, res){
             return res.render("./auth/login");
         }
         req.session.userId = user._id;
-        res.redirect("/songs");
+        res.redirect(backURL);
     });
 });
 
 router.get("/logout", function(req, res){
     // logout function
+    backURL = req.header("Referer");
     req.session.destroy();
-    res.redirect("/songs");
+    res.redirect(backURL);
 });
 
 module.exports = router;

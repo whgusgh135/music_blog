@@ -64,7 +64,7 @@ router.post("/songs", function(req, res){
             console.log(err);
             res.redirect("back");
         } else {
-            res.redirect("/songs");
+            res.redirect("/songs/" + newSong._id);
         }
     });
 });
@@ -106,7 +106,7 @@ router.put("/songs/:id", middleware.checkSongOwnership, function(req, res){
             console.log(err);
             res.redirect("back");
         } else {
-            res.redirect("/songs");
+            res.redirect("/songs/" + updatedSong._id);
         }
     });
 });
@@ -118,7 +118,7 @@ router.delete("/songs/:id", middleware.checkSongOwnership, function(req, res){
             console.log(err);
             res.redirect("back");
         } else {
-            res.redirect("/songs");
+            res.redirect("/userlist");
         }
     });
 });
